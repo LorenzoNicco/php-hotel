@@ -53,17 +53,57 @@
         <title>PHP Hotel</title>
     </head>
     <body>
-        <div>
-            <?php
-                foreach ($hotels as $hotel) {
-                    foreach ($hotel as $key => $value) {
-                        echo $key.': '.$value;
-                        echo '<br>';
-                    }
-
-                    echo '<br>';
-                }
-            ?>
-        </div>
+        <!-- tabella bootstrap -->
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <?php
+                        foreach ($hotels as $hotel) {
+                            echo '<th scope="col">'.$hotel["name"].'</th>';
+                        } 
+                    ?>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Description</th>
+                    <?php
+                        foreach ($hotels as $hotel) {
+                            echo '<td scope="col">'.$hotel["description"].'</td>';
+                        } 
+                    ?>
+                </tr>
+                <tr>
+                    <th scope="row">Parking</th>
+                    <?php
+                        foreach ($hotels as $hotel) {
+                            if ($hotel["parking"] == true) {
+                                echo '<td scope="col">Yes</td>';
+                            }
+                            else {
+                                echo '<td scope="col">No</td>';
+                            }
+                        } 
+                    ?>
+                </tr>
+                <tr>
+                    <th scope="row">Vote</th>
+                    <?php
+                        foreach ($hotels as $hotel) {
+                            echo '<td scope="col">'.$hotel["vote"].'</td>';
+                        } 
+                    ?>
+                </tr>
+                <tr>
+                    <th scope="row">Distance to center</th>
+                    <?php
+                        foreach ($hotels as $hotel) {
+                            echo '<td scope="col">'.$hotel["distance_to_center"].'</td>';
+                        } 
+                    ?>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
