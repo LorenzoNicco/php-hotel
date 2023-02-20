@@ -41,6 +41,8 @@
     ];
 
     $parkingOption = $_GET['parking-option'] ?? 'notSpecified';
+    $starsOption = $_GET['stars-option'] ?? 'notSpecified';
+    $starsNumber = (int) $starsOption;
 ?>
 
 <!DOCTYPE html>
@@ -55,72 +57,83 @@
         <title>PHP Hotel Bonus</title>
     </head>
     <body>
-        <!-- form -->
-        <div class="container my-3">
-            <div class="row">
-                <form action="" method="GET" class="col-4 offset-4 d-flex">
-                    <select class="form-select" aria-label="Default select example" name="parking-option">
-                        <option selected>Posto auto</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                    
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+        <main class="bg-dark p-3" style="height: 100vh;">
+            <!-- form -->
+            <div class="container mb-3">
+                <div class="row">
+                    <form action="" method="GET" class="col-4 offset-4 d-flex">
+                        <select class="form-select" aria-label="Default select example" name="parking-option">
+                            <option selected>Posto auto</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+
+                        <select class="form-select" aria-label="Default select example" name="stars-option">
+                            <option selected>Valutazione</option>
+                            <option value="1">1 Stella</option>
+                            <option value="2">2 Stelle</option>
+                            <option value="3">3 Stelle</option>
+                            <option value="4">4 Stelle</option>
+                            <option value="5">5 Stelle</option>
+                        </select>
+                        
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <!-- tabella bootstrap -->
-        <table class="table table-dark table-striped">
-            <tbody>
-                <?php
-                    if ($parkingOption == "notSpecified") {
-                        foreach ($hotels as $hotel) {
-                            echo '<tr>
-                                
-                                <th scope="col">'.$hotel["name"].'</th>
-    
-                                <td scope="col">'.$hotel["description"].'</td>
-                                <td scope="col">Voto '.$hotel["vote"].'</td>
-                                <td scope="col">'.$hotel["distance_to_center"].' km</td>
-    
-                            </tr>';
-                        }
-                    }
-                    elseif ($parkingOption =="yes") {
-                        foreach ($hotels as $hotel) {
-                            if ($hotel["parking"] == true) {
+            <!-- tabella bootstrap -->
+            <table class="table table-dark table-striped">
+                <tbody>
+                    <?php
+                        if ($parkingOption == "notSpecified" && $starsOption == "notSpecified") {
+                            foreach ($hotels as $hotel) {
                                 echo '<tr>
                                     
                                     <th scope="col">'.$hotel["name"].'</th>
         
                                     <td scope="col">'.$hotel["description"].'</td>
-                                    <td scope="col">Voto '.$hotel["vote"].'</td>
+                                    <td scope="col">'.$hotel["vote"].' Stelle</td>
                                     <td scope="col">'.$hotel["distance_to_center"].' km</td>
         
                                 </tr>';
                             }
-
                         }
-                    }
-                    elseif ($parkingOption =="no") {
-                        foreach ($hotels as $hotel) {
-                            if ($hotel["parking"] == false) {
-                                echo '<tr>
-                                    
-                                    <th scope="col">'.$hotel["name"].'</th>
-        
-                                    <td scope="col">'.$hotel["description"].'</td>
-                                    <td scope="col">Voto '.$hotel["vote"].'</td>
-                                    <td scope="col">'.$hotel["distance_to_center"].' km</td>
-        
-                                </tr>';
+                        elseif ($parkingOption =="yes" && $starsOption != "notSpecified") {
+                            foreach ($hotels as $hotel) {
+                                if ($hotel["parking"] == true && $hotel["vote"] >= $starsNumber) {
+                                    echo '<tr>
+                                        
+                                        <th scope="col">'.$hotel["name"].'</th>
+            
+                                        <td scope="col">'.$hotel["description"].'</td>
+                                        <td scope="col">'.$hotel["vote"].' Stelle</td>
+                                        <td scope="col">'.$hotel["distance_to_center"].' km</td>
+            
+                                    </tr>';
+                                }
+
                             }
-
                         }
-                    }
-                ?>
-            </tbody>
-        </table>
+                        elseif ($parkingOption =="no") {
+                            foreach ($hotels as $hotel) {
+                                if ($hotel["parking"] == false && $hotel["vote"] >= $starsNumber) {
+                                    echo '<tr>
+                                        
+                                        <th scope="col">'.$hotel["name"].'</th>
+            
+                                        <td scope="col">'.$hotel["description"].'</td>
+                                        <td scope="col">'.$hotel["vote"].' Stelle</td>
+                                        <td scope="col">'.$hotel["distance_to_center"].' km</td>
+            
+                                    </tr>';
+                                }
+
+                            }
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </main>
     </body>
 </html>
