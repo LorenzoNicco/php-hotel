@@ -39,6 +39,8 @@
         ],
 
     ];
+
+    $parkingOption = $_GET['parking-option'] ?? 'notSpecified';
 ?>
 
 <!DOCTYPE html>
@@ -53,56 +55,71 @@
         <title>PHP Hotel Bonus</title>
     </head>
     <body>
+        <!-- form -->
+        <div class="container my-3">
+            <div class="row">
+                <form action="" method="GET" class="col-4 offset-4 d-flex">
+                    <select class="form-select" aria-label="Default select example" name="parking-option">
+                        <option selected>Posto auto</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
         <!-- tabella bootstrap -->
         <table class="table table-dark table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <?php
-                        foreach ($hotels as $hotel) {
-                            echo '<th scope="col">'.$hotel["name"].'</th>';
-                        } 
-                    ?>
-                </tr>
-            </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Description</th>
-                    <?php
+                <?php
+                    if ($parkingOption == "notSpecified") {
                         foreach ($hotels as $hotel) {
-                            echo '<td scope="col">'.$hotel["description"].'</td>';
-                        } 
-                    ?>
-                </tr>
-                <tr>
-                    <th scope="row">Parking</th>
-                    <?php
+                            echo '<tr>
+                                
+                                <th scope="col">'.$hotel["name"].'</th>
+    
+                                <td scope="col">'.$hotel["description"].'</td>
+                                <td scope="col">Voto '.$hotel["vote"].'</td>
+                                <td scope="col">'.$hotel["distance_to_center"].' km</td>
+    
+                            </tr>';
+                        }
+                    }
+                    elseif ($parkingOption =="yes") {
                         foreach ($hotels as $hotel) {
                             if ($hotel["parking"] == true) {
-                                echo '<td scope="col">Yes</td>';
+                                echo '<tr>
+                                    
+                                    <th scope="col">'.$hotel["name"].'</th>
+        
+                                    <td scope="col">'.$hotel["description"].'</td>
+                                    <td scope="col">Voto '.$hotel["vote"].'</td>
+                                    <td scope="col">'.$hotel["distance_to_center"].' km</td>
+        
+                                </tr>';
                             }
-                            else {
-                                echo '<td scope="col">No</td>';
+
+                        }
+                    }
+                    elseif ($parkingOption =="no") {
+                        foreach ($hotels as $hotel) {
+                            if ($hotel["parking"] == false) {
+                                echo '<tr>
+                                    
+                                    <th scope="col">'.$hotel["name"].'</th>
+        
+                                    <td scope="col">'.$hotel["description"].'</td>
+                                    <td scope="col">Voto '.$hotel["vote"].'</td>
+                                    <td scope="col">'.$hotel["distance_to_center"].' km</td>
+        
+                                </tr>';
                             }
-                        } 
-                    ?>
-                </tr>
-                <tr>
-                    <th scope="row">Vote</th>
-                    <?php
-                        foreach ($hotels as $hotel) {
-                            echo '<td scope="col">'.$hotel["vote"].'</td>';
-                        } 
-                    ?>
-                </tr>
-                <tr>
-                    <th scope="row">Distance to center</th>
-                    <?php
-                        foreach ($hotels as $hotel) {
-                            echo '<td scope="col">'.$hotel["distance_to_center"].'</td>';
-                        } 
-                    ?>
-                </tr>
+
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </body>
