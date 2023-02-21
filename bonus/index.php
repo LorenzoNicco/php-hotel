@@ -63,13 +63,13 @@
                 <div class="row">
                     <form action="" method="GET" class="col-4 offset-4 d-flex">
                         <select class="form-select" aria-label="Default select example" name="parking-option">
-                            <option selected>Posto auto</option>
+                            <option value="" selected>Posto auto</option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
 
                         <select class="form-select" aria-label="Default select example" name="stars-option">
-                            <option selected>Valutazione</option>
+                            <option value="" selected>Valutazione</option>
                             <option value="1">1 Stella</option>
                             <option value="2">2 Stelle</option>
                             <option value="3">3 Stelle</option>
